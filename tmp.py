@@ -4,8 +4,10 @@ from mistralai import Mistral
 from dotenv import load_dotenv
 import tools as tools
 
+
+
 load_dotenv()
-MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY')
+MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY') # wWjwniwVkvvYlVT2aVf3CSqbSMzMvohe
 
 
 if __name__ == "__main__":
