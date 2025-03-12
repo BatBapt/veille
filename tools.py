@@ -14,6 +14,9 @@ def make_query(query, nb_result):
 
 
 def download_search(client, search, nb_result, output_path):
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
     for i, elem in enumerate(client.results(search)):
         elem.download_pdf(dirpath=output_path, filename=f"{elem.title}.pdf")
         print(f"{i+1}/{nb_result}")
