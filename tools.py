@@ -35,11 +35,11 @@ def replace_images_in_markdown(markdown_str, images_dict):
 
 
 def get_combined_markdown(ocr_response):
-  markdowns = []
-  for page in ocr_response.pages:
-    image_data = {}
-    for img in page.images:
-      image_data[img.id] = img.image_base64
-    markdowns.append(replace_images_in_markdown(page.markdown, image_data))
+    markdowns = []
+    for page in ocr_response.pages:
+        image_data = {}
+        for img in page.images:
+            image_data[img.id] = img.image_base64
+        markdowns.append(replace_images_in_markdown(page.markdown, image_data))
 
-  return "\n\n".join(markdowns)
+    return "\n\n".join(markdowns)
