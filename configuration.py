@@ -1,4 +1,6 @@
-import os
+PDF_PATH = "pdfs"
+MD_PATH = "mds"
+RESUME_PATH = "resums"
 
 
 MISTRAL_MODEL_OCR = "mistral-ocr-latest"

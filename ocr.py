@@ -98,9 +98,9 @@ def summarize(inputs_path, outputs_path):
 if __name__ == "__main__":
     client = Mistral(api_key=MISTRAL_API_KEY)
 
-    inputs_path = "pdfs"
-    outputs_md_path = "mds"
-    output_txt_path = "resums"
+    inputs_path = cfg.PDF_PATH
+    outputs_md_path = cfg.MD_PATH
+    output_txt_path = cfg.RESUME_PATH
 
     # extract_content(inputs_path=inputs_path, outputs_path=outputs_md_path)
     summarize(inputs_path=outputs_md_path, outputs_path=output_txt_path)

@@ -1,6 +1,7 @@
 import os
 import re
 from flask import Flask, render_template
+import configuration as cfg
 
 
 app = Flask(__name__)
@@ -36,14 +37,18 @@ def parse_document(text):
 @app.route("/")
 def display_papers():
     inputs_path = "resums/"
+    pdfs_path = cfg.PDF_PATH
     paper_data = []
     for paper in os.listdir(inputs_path):
         paper_path = os.path.join(inputs_path, paper)
+
+        pdf_path = os.path.join(pdfs_path, paper.replace(".txt", ".pdf"))
 
         with open(paper_path, "r", encoding="utf-8") as f:
             document = f.read()
 
         parsed_doc = parse_document(document.strip())
+        parsed_doc["pdf_link"] = pdf_path
         paper_data.append(parsed_doc)
 
     return render_template("index.html", papers=paper_data)

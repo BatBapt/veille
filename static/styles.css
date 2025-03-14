@@ -78,3 +78,24 @@ h1 {
 .summary-content .toggle-btn.expanded {
     background-color: #ff79c6;
 }
+
+.download-pdf {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.download-btn {
+    background-color: #ff79c6;
+    color: #0d1117;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #ffb6c1;
+}
