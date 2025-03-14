@@ -1,7 +1,9 @@
 from mistralai import Mistral
 from dotenv import load_dotenv
 import tools as tools
+import configuration as cfg
 import os
+import time
 
 load_dotenv()
 MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY') # wWjwniwVkvvYlVT2aVf3CSqbSMzMvohe
@@ -28,7 +30,7 @@ def extract_content(inputs_path, outputs_path):
         signed_url = client.files.get_signed_url(file_id=uploaded_pdf.id)
 
         ocr_response = client.ocr.process(
-            model="mistral-ocr-latest",
+            model=cfg.MISTRAL_MODEL_OCR,
             document={
                 "type": "document_url",
                 "document_url": signed_url.url,
@@ -49,6 +51,17 @@ def extract_content(inputs_path, outputs_path):
 def summarize(inputs_path, outputs_path):
     if not os.path.exists(outputs_path): os.mkdir(outputs_path)
 
+    model_rules = ("Tu es un super assistant qui aide les chercheurs à faire de la veille en français.\n"
+                   "Tes réponses doivent être claire et compréhensible, peu importe la longeur.\n"
+                   "Voilà le format de ta réponse:\n"
+                   "**NOM**: <titre>\n"
+                   "**AUTEURS**: <auteurs>\n"
+                   "**POINTS CLES**: <liste de n points clés ordonnée de 1 à n>\n"
+                   "**RESUME**: <grand texte>\n"
+                   "Le résumé doit couvrir largement (et en profondeur si besoin) le document complet.\n")
+
+    model_rules = "".join(model_rules)
+
     for file in os.listdir(inputs_path):
         output_filename = file.split(".")[0] + ".txt"
         output_filename = os.path.join(outputs_path, output_filename)
@@ -63,12 +76,11 @@ def summarize(inputs_path, outputs_path):
             document_content = f.read()
 
         chat_response = client.chat.complete(
-            model="mistral-large-latest",
+            model=cfg.MISTRAL_MODEL_SUMMMERIZE,
             messages=[
                 {
                     "role": "assistant",
-                    "content": "Tu es un super assistant qui aide les chercheurs à faire de la veille."
-                               "Tes réponses doivent être claire et compréhensible, tu dois résumer les documents en français.",
+                    "content": model_rules,
                 },
                 {
                     "role": "user",
@@ -76,9 +88,10 @@ def summarize(inputs_path, outputs_path):
                 }
             ]
         )
+        with open(output_filename, "w", encoding="utf-8") as f:
+            f.write(chat_response.choices[0].message.content)
 
-        print(chat_response.choices[0].message.content)
-        break
+        time.sleep(2)
 
 
 
@@ -89,7 +102,7 @@ if __name__ == "__main__":
     outputs_md_path = "mds"
     output_txt_path = "resums"
 
-    extract_content(inputs_path=inputs_path, outputs_path=outputs_md_path)
+    # extract_content(inputs_path=inputs_path, outputs_path=outputs_md_path)
     summarize(inputs_path=outputs_md_path, outputs_path=output_txt_path)
 
 

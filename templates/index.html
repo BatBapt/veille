@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles Scientifiques</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Articles Scientifiques</h1>
+        <div class="paper-grid">
+            {% for paper in papers %}
+            <div class="paper-box">
+                <h2>{{ paper.Nom }}</h2>
+                <p><strong>Auteurs :</strong> {{ paper.Auteurs }}</p>
+                <div class="key-points">
+                    <h3>Points Clés</h3>
+                    <ul>
+                        {% for key, value in paper['Points clés'].items() %}
+                        <li><strong>{{ key }}:</strong> {{ value }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="summary">
+                    <h3>Résumé</h3>
+                    <div class="summary-content">
+                        <p class="summary-text">{{ paper.Résumé }}</p>
+                        <button class="toggle-btn" type="button">Voir Plus</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
