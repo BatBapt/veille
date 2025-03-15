@@ -38,14 +38,12 @@ def extract_content(inputs_path, outputs_path):
             include_image_base64=True
         )
 
-        markdown_str = tools.get_combined_markdown(ocr_response)
-
         with open(output_filename, "w", encoding="utf-8") as f:
-            # f.write(markdown_str)
             for page in ocr_response.pages:
                 f.write(page.markdown)
                 f.write("\n\n")
-        break
+
+        time.sleep(2)
 
 
 def summarize(inputs_path, outputs_path):
@@ -102,7 +100,7 @@ if __name__ == "__main__":
     outputs_md_path = cfg.MD_PATH
     output_txt_path = cfg.RESUME_PATH
 
-    # extract_content(inputs_path=inputs_path, outputs_path=outputs_md_path)
+    extract_content(inputs_path=inputs_path, outputs_path=outputs_md_path)
     summarize(inputs_path=outputs_md_path, outputs_path=output_txt_path)
 
 

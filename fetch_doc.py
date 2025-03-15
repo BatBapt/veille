@@ -1,10 +1,18 @@
 import arxiv
 import tools as tools
+import datetime
+import configuration as cfg
 
 
 if __name__ == "__main__":
-    client = arxiv.Client(num_retries=5)
-    search = tools.make_query(query="cat:cs.AI AND submittedDate:[20250201 TO 20250301]", nb_result=10)
-    tools.download_search(client=client, search=search, nb_result=10, output_path="pdfs")
+    date = datetime.date.today()
+    date_delta = datetime.timedelta(days=14)
+    date_ago = (date - date_delta).strftime("%Y%m%d")
+    date_from = date.strftime("%Y%m%d")
 
+    nb_result = 30
 
+    client = arxiv.Client(delay_seconds=5, num_retries=3)
+    search = tools.make_query(query=f"cat:cs.AI AND submittedDate:[{date_ago} TO {date_from}]", nb_result=nb_result)
+    tools.download_search(client=client, search=search, nb_result=nb_result, output_path=cfg.PDF_PATH)
+    tools.assert_download(path=cfg.PDF_PATH, ext_looking="pdf")

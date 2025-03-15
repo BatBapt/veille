@@ -1,13 +1,13 @@
 import os
 import arxiv
+import time
 
 
 def make_query(query, nb_result):
     search = arxiv.Search(
         query=query,
         max_results=nb_result,
-        sort_order=arxiv.SortOrder.Ascending,
-        sort_by=arxiv.SortCriterion.Relevance,
+        sort_by=arxiv.SortCriterion.SubmittedDate,
     )
 
     return search
@@ -18,13 +18,30 @@ def download_search(client, search, nb_result, output_path):
         os.makedirs(output_path)
 
     for i, elem in enumerate(client.results(search)):
-        elem.download_pdf(dirpath=output_path, filename=f"{elem.title}.pdf")
-        print(f"{i+1}/{nb_result}")
+        output_file = f"{elem.title}.pdf"
+        if "/" in output_file:
+            output_file = output_file.replace("/", "_")
 
-    for file in os.listdir(output_path):
-        if not file.endswith(".pdf"):
-            print(f"{file} bugged ?")
-            os.remove(os.path.join(output_path, file))
+        tmp_full_output_path = os.path.join(output_path, output_file)
+        if os.path.exists(tmp_full_output_path):
+            print(f"{output_file} already exists!")
+            continue
+
+        elem.download_pdf(dirpath=output_path, filename=output_file)
+
+        if os.path.getsize(tmp_full_output_path) == 0:
+            os.remove(tmp_full_output_path)
+            print(f"{output_file} has been deleted!")
+
+        print(f"{i + 1}/{nb_result}")
+        time.sleep(2)
+
+
+def assert_download(path, ext_looking="pdf"):
+    for file in os.listdir(path):
+        if not file.endswith(ext_looking):
+            print(f"{file} is not a {ext_looking.upper()} file!")
+            os.remove(os.path.join(path, file))
 
 
 

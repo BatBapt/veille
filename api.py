@@ -12,24 +12,27 @@ def parse_document(text):
 
     # Extraction du nom
     name_match = re.search(r'\*\*NOM\*\*: (.+)', text)
-    key = "Nom"
-    parsed_data[key] = name_match.group(1) if name_match else None
+    key = "name"
+    name_value = name_match.group(1) if name_match else None
+    parsed_data[key] = name_value
 
     # Extraction des auteurs
     authors_match = re.search(r'\*\*AUTEURS\*\*: (.+)', text)
-    key = "Auteurs"
+    key = "authors"
     parsed_data[key] = authors_match.group(1) if authors_match else None
 
     # Extraction des points clés (optionnel, avec variantes d'orthographe)
     key_points_match = re.search(r'\*\*(POINTS CL[ÉE]S)\*\*:(.+?)(\*\*R[ÉE]SUM[ÉE]\*\*|$)', text, re.DOTALL)
     if key_points_match:
         points = re.findall(r'\d+\. \*\*(.*?)\*\*: (.+)', key_points_match.group(2))
-        key = "Points clés"
+        key = "key_points"
         parsed_data[key] = {title: desc for title, desc in points} if points else None
+        if parsed_data[key] is None:
+            parsed_data[key] = {f"Error with document {name_value}": "Something went wrong with this document during the parsing process"}
 
     # Extraction du résumé (optionnel, avec variantes d'orthographe)
     summary_match = re.search(r'\*\*R[ÉE]SUM[ÉE]\*\*:(.+)', text, re.DOTALL)
-    key = "Résumé"
+    key = "resum"
     parsed_data[key] = summary_match.group(1).strip() if summary_match else None
 
     return parsed_data
@@ -51,6 +54,8 @@ def display_papers():
         parsed_doc["pdf_link"] = pdf_path
         paper_data.append(parsed_doc)
 
+    for elem in paper_data:
+        print(type(elem["key_points"]))
     return render_template("index.html", papers=paper_data)
 
 

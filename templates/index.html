@@ -12,12 +12,12 @@
         <div class="paper-grid">
             {% for paper in papers %}
             <div class="paper-box">
-                <h2>{{ paper.Nom }}</h2>
-                <p><strong>Auteurs :</strong> {{ paper.Auteurs }}</p>
+                <h2>{{ paper.name }}</h2>
+                <p><strong>authors :</strong> {{ paper.Auteurs }}</p>
                 <div class="key-points">
                     <h3>Points Clés</h3>
                     <ul>
-                        {% for key, value in paper['Points clés'].items() %}
+                        {% for key, value in paper.key_points.items() %}
                         <li><strong>{{ key }}:</strong> {{ value }}</li>
                         {% endfor %}
                     </ul>
@@ -25,7 +25,7 @@
                 <div class="summary">
                     <h3>Résumé</h3>
                     <div class="summary-content">
-                        <p class="summary-text">{{ paper.Résumé }}</p>
+                        <p class="summary-text">{{ paper.resum }}</p>
                         <button class="toggle-btn" type="button">Voir Plus</button>
                     </div>
                 </div>
