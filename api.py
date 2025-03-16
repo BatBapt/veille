@@ -1,6 +1,6 @@
 import os
 import re
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 import configuration as cfg
 
 
@@ -37,10 +37,12 @@ def parse_document(text):
 
     return parsed_data
 
+
+inputs_path = cfg.RESUME_PATH
+pdfs_path = cfg.PDF_PATH
+
 @app.route("/")
 def display_papers():
-    inputs_path = "resums/"
-    pdfs_path = cfg.PDF_PATH
     paper_data = []
     for paper in os.listdir(inputs_path):
         paper_path = os.path.join(inputs_path, paper)
@@ -52,11 +54,14 @@ def display_papers():
 
         parsed_doc = parse_document(document.strip())
         parsed_doc["pdf_link"] = pdf_path
+        parsed_doc["pdf_name"] = paper.replace(".txt", ".pdf")
         paper_data.append(parsed_doc)
 
-    for elem in paper_data:
-        print(type(elem["key_points"]))
     return render_template("index.html", papers=paper_data)
+
+@app.route('/pdfs/<path:filename>')
+def download_file(filename):
+    return send_from_directory(pdfs_path, filename, as_attachment=True)
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ if __name__ == "__main__":
     date_ago = (date - date_delta).strftime("%Y%m%d")
     date_from = date.strftime("%Y%m%d")
 
-    nb_result = 30
+    nb_result = 15
 
     client = arxiv.Client(delay_seconds=5, num_retries=3)
     search = tools.make_query(query=f"cat:cs.AI AND submittedDate:[{date_ago} TO {date_from}]", nb_result=nb_result)
