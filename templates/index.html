@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articles Scientifiques</title>
+    <title>Articles Scientifiques IA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Articles Scientifiques</h1>
+        <h1>Articles Scientifiques IA</h1>
         <div class="paper-grid">
             {% for paper in papers %}
-            <div class="paper-box">
+            <div class="paper-box" style="opacity: 0; transform: translateY(20px);">
                 <h2>{{ paper.name }}</h2>
-                <p><strong>authors :</strong> {{ paper.Auteurs }}</p>
+                <p><strong>Auteurs :</strong> {{ paper.authors }}</p>
                 <div class="key-points">
                     <h3>Points Clés</h3>
                     <ul>
