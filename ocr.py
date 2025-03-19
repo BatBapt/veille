@@ -51,11 +51,13 @@ def summarize(inputs_path, outputs_path):
 
     model_rules = ("Tu es un super assistant qui aide les chercheurs à faire de la veille en français.\n"
                    "Tes réponses doivent être claire et compréhensible, peu importe la longeur.\n"
+                   "Si le document contient des liens (github ou autre), il est important que tu les récupère aussi aussi.\n"
                    "Voilà le format de ta réponse:\n"
                    "**NOM**: <titre>\n"
                    "**AUTEURS**: <auteurs>\n"
                    "**POINTS CLES**: <liste de n points clés ordonnée de 1 à n>\n"
                    "**RESUME**: <grand texte>\n"
+                   "**LINKS**: <liens> sinon Rien\n"
                    "Le résumé doit couvrir largement (et en profondeur si besoin) le document complet.\n")
 
     model_rules = "".join(model_rules)
