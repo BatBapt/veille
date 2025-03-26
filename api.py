@@ -28,16 +28,26 @@ def parse_document(text):
     # Extraction des points clés (optionnel, avec variantes d'orthographe)
     key_points_match = re.search(r'\*\*(POINTS CL[ÉE]S)\*\*:(.+?)(\*\*R[ÉE]SUM[ÉE]\*\*|$)', text, re.DOTALL)
     if key_points_match:
-        points = re.findall(r'\d+\. \*\*(.*?)\*\*: (.+)', key_points_match.group(2))
+        points = re.findall(r'\d+\.\s*(.+)', key_points_match.group(2))
         key = "key_points"
-        parsed_data[key] = {title: desc for title, desc in points} if points else None
+        parsed_data[key] = [point.strip() for point in points] if points else None
         if parsed_data[key] is None:
             parsed_data[key] = {f"Error with document {name_value}": "Something went wrong with this document during the parsing process"}
 
+    print(parsed_data["key_points"])
     # Extraction du résumé (optionnel, avec variantes d'orthographe)
-    summary_match = re.search(r'\*\*R[ÉE]SUM[ÉE]\*\*:(.+)', text, re.DOTALL)
+    summary_match = re.search(r'\*\*R[ÉE]SUM[ÉE]\*\*:(.+?)(\*\*LINKS\*\*|$)', text, re.DOTALL)
     key = "resum"
     parsed_data[key] = summary_match.group(1).strip() if summary_match else None
+
+    # Extraction des liens
+    links_match = re.search(r'\*\*LINKS\*\*:\s*(.+)', text, re.DOTALL)
+    if links_match:
+        links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', links_match.group(1))
+        key = "links"
+        parsed_data[key] = {title: url for title, url in links} if links else None
+        if parsed_data[key] is None:
+            parsed_data[key] = {f"Error with document {name_value}": "Something went wrong with this document during the parsing process"}
 
     return parsed_data
 

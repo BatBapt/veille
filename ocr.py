@@ -1,12 +1,15 @@
+import sqlite3
+
 from mistralai import Mistral
 from dotenv import load_dotenv
 import tools as tools
 import configuration as cfg
 import os
+import re
 import time
 
 load_dotenv()
-MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY') # wWjwniwVkvvYlVT2aVf3CSqbSMzMvohe
+MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY')
 
 
 def extract_content(inputs_path, outputs_path):
@@ -39,9 +42,9 @@ def extract_content(inputs_path, outputs_path):
         )
 
         with open(output_filename, "w", encoding="utf-8") as f:
-            for page in ocr_response.pages:
-                f.write(page.markdown)
-                f.write("\n\n")
+            f.write(tools.get_combined_markdown(ocr_response))
+            """f.write(page.markdown)
+            f.write("\n\n")"""
 
         time.sleep(2)
 
@@ -51,14 +54,14 @@ def summarize(inputs_path, outputs_path):
 
     model_rules = ("Tu es un super assistant qui aide les chercheurs à faire de la veille en français.\n"
                    "Tes réponses doivent être claire et compréhensible, peu importe la longeur.\n"
-                   "Si le document contient des liens (github ou autre), il est important que tu les récupère aussi aussi.\n"
                    "Voilà le format de ta réponse:\n"
                    "**NOM**: <titre>\n"
                    "**AUTEURS**: <auteurs>\n"
-                   "**POINTS CLES**: <liste de n points clés ordonnée de 1 à n>\n"
+                   "**POINTS CLES**: <liste de n points clés ordonnées de 1 à n>\n"
                    "**RESUME**: <grand texte>\n"
-                   "**LINKS**: <liens> sinon Rien\n"
-                   "Le résumé doit couvrir largement (et en profondeur si besoin) le document complet.\n")
+                   "**LINKS**: <liste des différents liens utiles (site web perso, code, données) que tu trouves dans le document.\n"
+                   "Le résumé doit couvrir largement (et en profondeur si besoin) le document complet.\""
+                   "Si tu rencontres une image, essaye de la décrire.\n")
 
     model_rules = "".join(model_rules)
 
@@ -88,14 +91,14 @@ def summarize(inputs_path, outputs_path):
                 }
             ]
         )
+
         with open(output_filename, "w", encoding="utf-8") as f:
             f.write(chat_response.choices[0].message.content)
 
         time.sleep(2)
 
-
-
 if __name__ == "__main__":
+
     client = Mistral(api_key=MISTRAL_API_KEY)
 
     inputs_path = cfg.PDF_PATH

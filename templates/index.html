@@ -18,8 +18,14 @@
                 <div class="key-points">
                     <h3>Points Clés</h3>
                     <ul>
-                        {% for key, value in paper.key_points.items() %}
-                        <li><strong>{{ key }}:</strong> {{ value }}</li>
+                        {% for key_point in paper.key_points %}
+                            <li><strong>{{ key_point }}</strong></li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Liens</h3>
+                    <ul>
+                        {% for key, value in paper.links.items() %}
+                            <li><a target="_blank" href="{{ value }}">{{ key }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

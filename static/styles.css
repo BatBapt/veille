@@ -161,6 +161,30 @@ h1::after {
   color: var(--hover-color);
 }
 
+/* Style des liens dans les points clés */
+.key-points ul li a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.key-points ul li a:hover {
+  color: var(--hover-color);
+}
+
+.key-points ul li a::after {
+  content: "→";
+  position: absolute;
+  right: -15px;
+  color: var(--secondary-color);
+  transition: right 0.3s ease;
+}
+
+.key-points ul li a:hover::after {
+  right: -20px;
+}
+
 /* Résumé */
 .summary {
   margin: 20px 0;
@@ -259,7 +283,6 @@ h1::after {
   border: 1px solid transparent;
   border-radius: var(--border-radius);
   transition: border-color 0.3s ease;
-  pointer-events: none;
 }
 
 .paper-box:hover::after {
