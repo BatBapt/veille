@@ -18,9 +18,6 @@ def download_search(client: arxiv.Client, search, nb_result, output_path):
         os.makedirs(output_path)
 
     for i, elem in enumerate(client.results(search)):
-        print(elem.categories)
-        print(elem.links[-1])
-        print(elem.title)
         output_file = f"{elem.title}.pdf"
         if "/" in output_file:
             output_file = output_file.replace("/", "_")
@@ -30,8 +27,7 @@ def download_search(client: arxiv.Client, search, nb_result, output_path):
             print(f"{output_file} already exists!")
             continue
 
-        continue
-        # elem.download_pdf(dirpath=output_path, filename=output_file)
+        elem.download_pdf(dirpath=output_path, filename=output_file)
 
         if os.path.getsize(tmp_full_output_path) == 0:
             os.remove(tmp_full_output_path)

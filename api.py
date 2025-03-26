@@ -2,9 +2,13 @@ import os
 import re
 from flask import Flask, render_template, send_from_directory
 import configuration as cfg
+import sqlite3
 
 
 app = Flask(__name__)
+
+inputs_path = cfg.RESUME_PATH
+pdfs_path = cfg.PDF_PATH
 
 
 def parse_document(text):
@@ -36,10 +40,6 @@ def parse_document(text):
     parsed_data[key] = summary_match.group(1).strip() if summary_match else None
 
     return parsed_data
-
-
-inputs_path = cfg.RESUME_PATH
-pdfs_path = cfg.PDF_PATH
 
 @app.route("/")
 def display_papers():

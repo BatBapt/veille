@@ -6,11 +6,11 @@ import configuration as cfg
 
 if __name__ == "__main__":
     date = datetime.date.today()
-    date_delta = datetime.timedelta(days=14)
+    date_delta = datetime.timedelta(days=30)
     date_ago = (date - date_delta).strftime("%Y%m%d")
     date_from = date.strftime("%Y%m%d")
 
-    nb_result = 15
+    nb_result = 50
 
     client = arxiv.Client(delay_seconds=5, num_retries=3)
     search = tools.make_query(query=f"cat:cs.AI AND submittedDate:[{date_ago} TO {date_from}]", nb_result=nb_result)
