@@ -20,11 +20,11 @@ The process is simple:
 
 ## Futur & Todo
 
-- Update the code in a more scalabe way
-- Some PDF files may download incorrectly
-- Configure a cron job for the script
-- Set up a mail environnement with/without the Flask Server
-- Add more sources for the paper ?
+- [ ] Update the code in a more scalabe way
+- [ ] Some PDF files may download incorrectly
+- [ ] Configure a cron job for the script 
+- [ ] Set up a mail environnement with/without the Flask Server 
+- [ ] Add more sources for the paper ?
 
 
 
