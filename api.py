@@ -34,7 +34,6 @@ def parse_document(text):
         if parsed_data[key] is None:
             parsed_data[key] = {f"Error with document {name_value}": "Something went wrong with this document during the parsing process"}
 
-    print(parsed_data["key_points"])
     # Extraction du résumé (optionnel, avec variantes d'orthographe)
     summary_match = re.search(r'\*\*R[ÉE]SUM[ÉE]\*\*:(.+?)(\*\*LINKS\*\*|$)', text, re.DOTALL)
     key = "resum"

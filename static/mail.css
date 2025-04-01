@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #64ffda;
+}
+
+.paper-grid {
+  width: 100%;
+}
+
+.paper-box {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10px 0; /* Margin seulement en haut et en bas */
+  width: 100%; /* Largeur complète pour chaque boîte */
+  box-sizing: border-box; /* Inclure padding et border dans la largeur */
+  display: block; /* Assure que chaque boîte est un bloc */
+}
+
+.paper-box h2 {
+  color: #64ffda;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.paper-box p {
+  margin-bottom: 15px;
+}
+
+.key-points ul {
+  list-style: none;
+  padding-left: 15px;
+}
+
+.key-points li {
+  margin-bottom: 8px;
+}
+
+.toggle-btn, .download-btn {
+  background-color: #0a192f;
+  color: #64ffda;
+  border: 1px solid #64ffda;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.toggle-btn:hover, .download-btn:hover {
+  background-color: #4169e1;
+}

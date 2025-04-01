@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles Scientifiques IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Articles Scientifiques IA</h1>
+        <div class="paper-grid">
+            {% for paper in papers %}
+                <div class="paper-box">
+                    <h2>{{ paper.name }}</h2>
+                    <p><strong>Auteurs :</strong> {{ paper.authors }}</p>
+                    <div class="key-points">
+                        <h3>Points Clés</h3>
+                        <ul>
+                            {% for key_point in paper.key_points %}
+                                <li><strong>{{ key_point }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                        <h3>Liens</h3>
+                        <ul>
+                            {% for key, value in paper.links.items() %}
+                                <li><a target="_blank" href="{{ value }}">{{ key }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="summary">
+                        <h3>Résumé</h3>
+                        <div class="summary-content">
+                            <p class="summary-text">{{ paper.resum }}</p>
+                        </div>
+                    </div>
+                    <div class="download-pdf">
+                        <a href="{{ paper.pdf_link }}" download="{{ paper.pdf_name }}" class="download-btn">Télécharger le PDF</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
