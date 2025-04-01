@@ -15,8 +15,8 @@ load_dotenv()
 # Configuration du script
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
-SMTP_USERNAME = os.getenv("GMAIL_USERNAME")
-SMTP_PASSWORD = os.getenv("GMAIL_PASSWORD")
+SMTP_USERNAME = os.getenv("MAIL_USERNAME")
+SMTP_PASSWORD = os.getenv("MAIL_PASSWORD")
 REMOTE_PDF_PATH = os.getenv("REMOTE_PDF_PATH")
 MY_IP_PORT = os.getenv("MY_IP_PORT")
 
